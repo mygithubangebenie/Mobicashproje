@@ -2,6 +2,10 @@
   <div class="max-w-md m-auto py-10">
     <div class="text-red" v-if="error">{{ error }}</div>
     <h3 class="font-mono font-regular text-3xl mb-4">Add a new customer</h3>
+    <form method="GET" action="http://dev.mobivat.com:8080/vsdc_module/mobivat/api/product/productId?upc=224444445">
+      <input type="text" name="upc" size="40" maxlength="256" placeholder="search with product upc">
+      <input type="submit" name="search_button" value="Search">
+    </form>
     <form action="" @submit.prevent="addCustomer">
       <div class="mb-6">
         <input class="input"

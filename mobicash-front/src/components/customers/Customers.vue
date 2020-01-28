@@ -91,7 +91,7 @@ export default {
     },
     updateCustomer (customer) {
       this.editedCustomer = ''
-      this.$http.secured.patch(`/api/v1/customers/${customer.id}`, { customer: { names: customer.name } })
+      this.$http.secured.patch(`/api/v1/customers/${customer.id}`, { customer: { name: customer.name } })
         .catch(error => this.setError(error, 'Cannot update customer'))
     }
   }

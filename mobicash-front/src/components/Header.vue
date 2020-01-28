@@ -10,8 +10,7 @@
         <router-link to="/" class="link-grey px-2 no-underline" v-if="!signedIn()">Sign in</router-link>
         <router-link to="/signup" class="link-grey px-2 no-underline" v-if="!signedIn()">Sign Up</router-link>
         <router-link to="/customers" class="link-grey px-2 no-underline" v-if="signedIn()">Customers</router-link>
-        <router-link to="/artists" class="link-grey px-2 no-underline" v-if="signedIn()">Artists</router-link>
-        <a href="#" @click.prevent="signOut" class="link-grey px-2 no-underline" v-if="signedIn()">Sign out</a>
+         <a href="#" @click.prevent="signOut" class="link-grey px-2 no-underline" v-if="signedIn()">Sign out</a>
       </div>
     </div>
   </header>

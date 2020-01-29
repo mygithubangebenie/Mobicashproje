@@ -1,17 +1,31 @@
 <template>
-  <div class="max-w-md m-auto py-10">
+  <div class="m-auto py-10" style="width:40%">
     <div class="text-red" v-if="error">{{ error }}</div>
     <h3 class="font-mono font-regular text-3xl mb-4">Add a new customer</h3>
-    <form method="GET" action="http://dev.mobivat.com:8080/vsdc_module/mobivat/api/product/productId?upc=224444445">
-      <input type="text" name="upc" size="40" maxlength="256" placeholder="search with product upc">
-      <input type="submit" name="search_button" value="Search">
-    </form>
     <form action="" @submit.prevent="addCustomer">
       <div class="mb-6">
-        <input class="input"
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
           autofocus autocomplete="off"
-          placeholder="Type an customer name"
+          placeholder="Type a customer name"
           v-model="newCustomer.name" />
+      </div>
+        <div class="mb-6">
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
+          autofocus autocomplete="off"
+          placeholder="Type a customer phone"
+          v-model="newCustomer.phone" />
+      </div>
+      <div class="mb-6">
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
+          autofocus autocomplete="off"
+          placeholder="Type a customer date of birth"
+          v-model="newCustomer.dob" type="date" />
+      </div>
+        <div class="mb-6">
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
+          autofocus autocomplete="off"
+          placeholder="Type a customer nationality"
+          v-model="newCustomer.nationality" />
       </div>
       <input type="submit" value="Add Customer" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green hover:bg-green-dark block w-full py-4 text-white items-center justify-center" />
     </form>
@@ -24,7 +38,7 @@
         <div class="flex items-center justify-between flex-wrap">
           <p class="block flex-1 font-mono font-semibold flex items-center ">
             <svg class="fill-current text-indigo w-6 h-6 mr-2" viewBox="0 0 20 20" width="20" height="20"><title>customer</title><path d="M15.75 8l-3.74-3.75a3.99 3.99 0 0 1 6.82-3.08A4 4 0 0 1 15.75 8zm-13.9 7.3l9.2-9.19 2.83 2.83-9.2 9.2-2.82-2.84zm-1.4 2.83l2.11-2.12 1.42 1.42-2.12 2.12-1.42-1.42zM10 15l2-2v7h-2v-5z"></path></svg>
-            {{ customer.name }}
+            {{ customer.name }} {{ customer.phone }} {{ customer.dob }} {{ customer.nationality }}
           </p>
 
           <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
@@ -32,19 +46,24 @@
 
           <button class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
          @click.prevent="removeCustomer(customer)">Delete</button>
+
         </div>
 
         <div v-if="customer == editedCustomer">
           <form action="" @submit.prevent="updateCustomer(customer)">
             <div class="mb-6 p-4 bg-white rounded border border-grey-light mt-4">
-              <input class="input" v-model="customer.name" />
+              <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center" v-model="customer.name" />
               <input type="submit" value="Update" class=" my-2 bg-transparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 rounded cursor-pointer">
             </div>
           </form>
         </div>
       </li>
     </ul>
-  </div>
+      <form class="w-full max-w-sm" method="GET" action="http://localhost:3000/api/v1/customerpdf">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+           <input type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name="print" value="Print pdf">
+        </div>
+      </form></div>
 </template>
 
 <script>
@@ -76,7 +95,7 @@ export default {
       if (!value) {
         return
       }
-      this.$http.secured.post('/api/v1/customers/', { customer: { name: this.newCustomer.name } })
+      this.$http.secured.post('/api/v1/customers/', { customer: { name: this.newCustomer.name, phone: this.newCustomer.phone, nationality: this.newCustomer.nationality, dob: this.newCustomer.dob } })
         .then(response => {
           this.customers.push(response.data)
           this.newCustomer = ''
@@ -98,6 +117,7 @@ export default {
       this.$http.secured.patch(`/api/v1/customers/${customer.id}`, { customer: { name: customer.name } })
         .catch(error => this.setError(error, 'Cannot update customer'))
     }
+
   }
 }
 </script>

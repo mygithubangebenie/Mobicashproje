@@ -6,6 +6,12 @@
 
         <a href="/" class="uppercase text-sm font-mono pl-4 font-semibold no-underline text-indigo-dark hover:text-indigo-darker">Customer Store</a>
       </div>
+      <form class="w-full max-w-sm" method="GET" v-if="signedIn()" action="http://dev.mobivat.com:8080/vsdc_module/mobivat/api/product/productId? ">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+          <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" name="upc" placeholder="enter upc" aria-label="Full name">
+          <input type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name="search_button" value="Search">
+        </div>
+      </form>
       <div>
         <router-link to="/" class="link-grey px-2 no-underline" v-if="!signedIn()">Sign in</router-link>
         <router-link to="/signup" class="link-grey px-2 no-underline" v-if="!signedIn()">Sign Up</router-link>

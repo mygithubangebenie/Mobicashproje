@@ -3,14 +3,19 @@ module Api
     class CustomersController < ApplicationController
       before_action :set_customer, only: [:show, :update, :destroy]
 
-      # GET /customers
+      
       def index
         @customers = Customer.all
 
         render json: @customers
       end
-
-      # GET /customers/1
+      def print
+        @customers = Customer.all
+     
+            pdf = CustomerPdf.new(@customers)
+            send_data pdf.render, filename: "customers.pdf",type: "application/pdf",disposition: "inline"
+          
+      end
       def show
         render json: @customer
       end
@@ -49,7 +54,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def customer_params
-          params.require(:customer).permit(:name, :email, :password, :password_comfirmation )
+          params.require(:customer).permit(:name, :dob, :nationality, :phone )
         end
     end
   end

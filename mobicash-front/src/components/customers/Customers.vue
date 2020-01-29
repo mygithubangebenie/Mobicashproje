@@ -38,7 +38,7 @@
         <div class="flex items-center justify-between flex-wrap">
           <p class="block flex-1 font-mono font-semibold flex items-center ">
             <svg class="fill-current text-indigo w-6 h-6 mr-2" viewBox="0 0 20 20" width="20" height="20"><title>customer</title><path d="M15.75 8l-3.74-3.75a3.99 3.99 0 0 1 6.82-3.08A4 4 0 0 1 15.75 8zm-13.9 7.3l9.2-9.19 2.83 2.83-9.2 9.2-2.82-2.84zm-1.4 2.83l2.11-2.12 1.42 1.42-2.12 2.12-1.42-1.42zM10 15l2-2v7h-2v-5z"></path></svg>
-            {{ customer.name }} {{ customer.phone }} {{ customer.dob }} {{ customer.nationality }}
+           <pre> {{ customer.name }}</pre><pre> {{ customer.phone }}</pre><pre> {{ customer.dob }}</pre> <pre>{{ customer.nationality }}</pre>
           </p>
 
           <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
@@ -61,7 +61,7 @@
     </ul>
       <form class="w-full max-w-sm" method="GET" action="http://localhost:3000/api/v1/customerpdf">
         <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
-           <input type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name="print" value="Print pdf">
+           <input type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name="search_button" value="Print pdf">
         </div>
       </form></div>
 </template>

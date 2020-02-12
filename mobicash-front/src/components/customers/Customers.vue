@@ -1,5 +1,5 @@
 <template>
-  <div class="m-auto py-10" style="width:40%">
+  <div class="m-auto py-10" style="width:80%;">
     <div class="text-red" v-if="error">{{ error }}</div>
     <h3 class="font-mono font-regular text-3xl mb-4">Add a new customer</h3>
     <form action="" @submit.prevent="addCustomer">
@@ -29,36 +29,30 @@
       </div>
       <input type="submit" value="Add Customer" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green hover:bg-green-dark block w-full py-4 text-white items-center justify-center" />
     </form>
-
-    <hr class="border border-grey-light my-6" />
-
-    <ul class="list-reset mt-4">
-      <li class="py-4" v-for="customer in customers" :key="customer.id" :customer="customer">
-
-        <div class="flex items-center justify-between flex-wrap">
-          <p class="block flex-1 font-mono font-semibold flex items-center ">
-            <svg class="fill-current text-indigo w-6 h-6 mr-2" viewBox="0 0 20 20" width="20" height="20"><title>customer</title><path d="M15.75 8l-3.74-3.75a3.99 3.99 0 0 1 6.82-3.08A4 4 0 0 1 15.75 8zm-13.9 7.3l9.2-9.19 2.83 2.83-9.2 9.2-2.82-2.84zm-1.4 2.83l2.11-2.12 1.42 1.42-2.12 2.12-1.42-1.42zM10 15l2-2v7h-2v-5z"></path></svg>
-           <pre> {{ customer.name }}</pre><pre> {{ customer.phone }}</pre><pre> {{ customer.dob }}</pre> <pre>{{ customer.nationality }}</pre>
-          </p>
-
-          <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
+    <table class="table-auto">
+    <thead>
+    <tr>
+      <th class="px-4 py-2">Name</th>
+      <th class="px-4 py-2">Phone</th>
+      <th class="px-4 py-2">Date of birth</th>
+      <th class="px-4 py-2">Nationality</th>
+      <th class="px-4 py-2">Action</th>
+    </tr>
+  </thead>
+  <tbody v-for="customer in customers" :key="customer.id" :customer="customer">
+    <tr>
+      <td class="border px-4 py-2">{{ customer.name }}</td>
+      <td class="border px-4 py-2">{{ customer.phone }}</td>
+      <td class="border px-4 py-2">{{ customer.dob }}</td>
+      <td class="border px-4 py-2">{{ customer.nationality }}</td>
+      <td>           <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
           @click.prevent="editCustomer(customer)">Edit</button>
 
           <button class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
-         @click.prevent="removeCustomer(customer)">Delete</button>
-
-        </div>
-
-        <div v-if="customer == editedCustomer">
-          <form action="" @submit.prevent="updateCustomer(customer)">
-            <div class="mb-6 p-4 bg-white rounded border border-grey-light mt-4">
-              <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center" v-model="customer.name" />
-              <input type="submit" value="Update" class=" my-2 bg-transparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 rounded cursor-pointer">
-            </div>
-          </form>
-        </div>
-      </li>
-    </ul>
+         @click.prevent="removeCustomer(customer)">Delete</button></td>
+    </tr>
+  </tbody>
+    </table>
       <form class="w-full max-w-sm" method="GET" action="http://localhost:3000/api/v1/customerpdf">
         <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
            <input type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name="search_button" value="Print pdf">

@@ -1,44 +1,41 @@
 <template>
-  <div class=" py-10" style="width:80%;">
+  <div class="mx-auto py-10" style="width:80%;">
     <div class="text-red" v-if="error">{{ error }}</div>
-    <table class="table-auto">
-    <thead>
-    <tr>
-      <th class="px-4 py-2">Name</th>
-      <th class="px-4 py-2">Phone</th>
-      <th class="px-4 py-2">Date of birth</th>
-      <th class="px-4 py-2">Nationality</th>
-      <th class="px-4 py-2">Action</th>
-    </tr>
-  </thead>
-  <tbody v-for="customer in customers" :key="customer.id" :customer="customer">
-    <tr>
-      <td class="border px-4 py-2">{{ customer.name }}</td>
-      <td class="border px-4 py-2">{{ customer.phone }}</td>
-      <td class="border px-4 py-2">{{ customer.dob }}</td>
-      <td class="border px-4 py-2">{{ customer.nationality }}</td>
-      <td>           <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
-          @click.prevent="editCustomer(customer)">Edit</button>
-
-          <button class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
-         @click.prevent="removeCustomer(customer)">Delete</button></td>
-    </tr>
-  </tbody>
-    </table>
-      <form class="w-full max-w-sm" method="GET" action="http://localhost:3000/api/v1/customerpdf">
-        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
-           <input type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name="search_button" value="Print pdf">
-        </div>
-      </form>
-          <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" name="upc" v-model="upc" placeholder="enter upc" aria-label="Full name">
-          <p>{{ productUser }}</p><p>{{ productId }}</p><p> {{ productName }}</p><p>{{ productCopmleted }}</p>
-        </div>
-</template>
+    <h3 class="font-mono font-regular text-3xl mb-4">Add a new customer</h3>
+    <form action="" @submit.prevent="addCustomer">
+      <div class="mb-6">
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
+          autofocus autocomplete="off"
+          placeholder="Type a customer name"
+          v-model="newCustomer.name" />
+      </div>
+        <div class="mb-6">
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
+          autofocus autocomplete="off"
+          placeholder="Type a customer phone"
+          v-model="newCustomer.phone" />
+      </div>
+      <div class="mb-6">
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
+          autofocus autocomplete="off"
+          placeholder="Type a customer date of birth"
+          v-model="newCustomer.dob" type="date" />
+      </div>
+        <div class="mb-6">
+        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
+          autofocus autocomplete="off"
+          placeholder="Type a customer nationality"
+          v-model="newCustomer.nationality" />
+      </div>
+      <input type="submit" value="Add Customer" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green hover:bg-green-dark block w-full py-4 text-white items-center justify-center" />
+    </form>
+</div>
+    </template>
 
 <script>
 import axios from 'axios'
 export default {
-  name: 'Customers',
+  name: 'NewCustomer',
   data () {
     return {
       customers: [],
@@ -74,6 +71,7 @@ export default {
         .then(response => {
           this.customers.push(response.data)
           this.newCustomer = ''
+          this.$router.replace('/customers')
         })
         .catch(error => this.setError(error, 'Cannot create customer'))
     },

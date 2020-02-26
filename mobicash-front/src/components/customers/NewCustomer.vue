@@ -15,19 +15,13 @@
           placeholder="Type a customer phone"
           v-model="newCustomer.phone" />
       </div>
-      <div class="mb-6">
-        <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
-          autofocus autocomplete="off"
-          placeholder="Type a customer date of birth"
-          v-model="newCustomer.dob" type="date" />
-      </div>
         <div class="mb-6">
         <input class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal items-center justify-center"
           autofocus autocomplete="off"
-          placeholder="Type a customer nationality"
-          v-model="newCustomer.nationality" />
+          placeholder="Type a customer address"
+          v-model="newCustomer.address" />
       </div>
-      <input type="submit" value="Add Customer" class="font-sans font-bold px-4 rounded cursor-pointer no-underline bg-green hover:bg-green-dark block w-full py-4 text-white items-center justify-center" />
+      <input type="submit" value="Add Customer" class="btn btn-primary" />
     </form>
 </div>
     </template>
@@ -67,7 +61,7 @@ export default {
       if (!value) {
         return
       }
-      this.$http.secured.post('/api/v1/customers/', { customer: { name: this.newCustomer.name, phone: this.newCustomer.phone, nationality: this.newCustomer.nationality, dob: this.newCustomer.dob } })
+      this.$http.secured.post('/api/v1/customers/', { customer: { name: this.newCustomer.name, phone: this.newCustomer.phone, address: this.newCustomer.address } })
         .then(response => {
           this.customers.push(response.data)
           this.newCustomer = ''

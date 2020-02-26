@@ -13,9 +13,9 @@ class CustomerPdf < Prawn::Document
     end
   end
   def customer_id_all
-    [["Names", "Date of Birth", "National Id", "Adress"]] +
+    [["Names", "Address", "Phone"]] +
     @customers.map do |customer|
-      [customer.name, customer.dob, customer.nationality, customer.phone]
+      [customer.name, customer.address, customer.phone]
     end
   end
 end

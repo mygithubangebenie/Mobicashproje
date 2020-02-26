@@ -6,7 +6,6 @@ module Api
       
       def index
         @customers = Customer.all
-
         render json: @customers
       end
       def print
@@ -54,7 +53,7 @@ module Api
 
         # Only allow a trusted parameter "white list" through.
         def customer_params
-          params.require(:customer).permit(:name, :dob, :nationality, :phone )
+          params.require(:customer).permit(:name, :address, :phone )
         end
     end
   end

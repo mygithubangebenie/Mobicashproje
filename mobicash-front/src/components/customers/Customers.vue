@@ -1,37 +1,42 @@
 <template>
   <div class=" py-10" style="width:80%;">
     <div class="text-red" v-if="error">{{ error }}</div>
+    <p class="font-bold text-center">All Customers</p>
+    <div class="bg-white-100 border-t border" role="alert">
+      <ul class="list-reset mt-4">
+        <p class="titles">Customer Names &nbsp; Address &nbsp; Phone Number</p>
+        <li class="py-4" v-for="customer in customers" :key="customer.id" :customer="customer">
     <table class="table-auto">
-    <thead>
-    <tr>
-      <th class="px-4 py-2">Name</th>
-      <th class="px-4 py-2">Phone</th>
-      <th class="px-4 py-2">Date of birth</th>
-      <th class="px-4 py-2">Nationality</th>
-      <th class="px-4 py-2">Action</th>
-    </tr>
-  </thead>
-  <tbody v-for="customer in customers" :key="customer.id" :customer="customer">
     <tr>
       <td class="border px-4 py-2">{{ customer.name }}</td>
+      <td class="border px-4 py-2">{{ customer.address }}</td>
       <td class="border px-4 py-2">{{ customer.phone }}</td>
-      <td class="border px-4 py-2">{{ customer.dob }}</td>
-      <td class="border px-4 py-2">{{ customer.nationality }}</td>
-      <td>           <button class="bg-tranparent text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 mr-2 rounded"
+      <td><button class="btn btn-outline-info btn-sm"
           @click.prevent="editCustomer(customer)">Edit</button>
 
-          <button class="bg-transprent text-sm hover:bg-red text-red hover:text-white no-underline font-bold py-2 px-4 rounded border border-red"
+          <button class="btn btn-outline-danger btn-sm"
          @click.prevent="removeCustomer(customer)">Delete</button></td>
     </tr>
-  </tbody>
     </table>
+
+          <div v-if="customer == editedCustomer" style="width:30%">
+            <form action="" @submit.prevent="updateCustomer(customer)">
+              <div class="mb-6 p-4 bg-white rounded border border-grey-light mt-4">
+                <input class="input form-control" v-model="customer.name" /><br>
+                <input class="input form-control" v-model="customer.address" /><br>
+                <input class="input form-control" v-model="customer.phone" /><br>
+                <input type="submit" value="Update" class="btn-info text-sm hover:bg-blue hover:text-white text-blue border border-blue no-underline font-bold py-2 px-4 rounded cursor-pointer">
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
       <form class="w-full max-w-sm" method="GET" action="http://localhost:3000/api/v1/customerpdf">
         <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
            <input type="submit"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" name="search_button" value="Print pdf">
         </div>
       </form>
-          <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" name="upc" v-model="upc" placeholder="enter upc" aria-label="Full name">
-          <p>{{ productUser }}</p><p>{{ productId }}</p><p> {{ productName }}</p><p>{{ productCopmleted }}</p>
         </div>
 </template>
 
@@ -70,7 +75,7 @@ export default {
       if (!value) {
         return
       }
-      this.$http.secured.post('/api/v1/customers/', { customer: { name: this.newCustomer.name, phone: this.newCustomer.phone, nationality: this.newCustomer.nationality, dob: this.newCustomer.dob } })
+      this.$http.secured.post('/api/v1/customers/', { customer: { name: this.newCustomer.name, phone: this.newCustomer.phone, address: this.newCustomer.address } })
         .then(response => {
           this.customers.push(response.data)
           this.newCustomer = ''
@@ -95,7 +100,7 @@ export default {
     lookupUpc: function () {
       var thisApp = this
       thisApp.productName = 'Please wait...'
-      axios.get('https://jsonplaceholder.typicode.com/todos/' + thisApp.upc)
+      axios.get('http://dev.mobivat.com:8080/vsdc_module/mobivat/api/product/productId?upc' + thisApp.upc)
         .then(function (response) {
           thisApp.productId = 'id:' + response.data.id
           thisApp.productUser = 'userId:' + response.data.userId
